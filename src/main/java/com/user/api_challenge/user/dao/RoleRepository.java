@@ -3,4 +3,6 @@ package com.user.api_challenge.user.dao;
 import com.user.api_challenge.user.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {}
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findRoleByName(String roleName);
+}

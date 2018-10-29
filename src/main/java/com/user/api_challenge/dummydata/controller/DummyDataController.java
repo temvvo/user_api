@@ -60,8 +60,9 @@ public class DummyDataController {
     }
 
     logger.debug("####### DummyDataController.generateAll() started");
-    Optional<User> userResult = this.userRepository.findByEmailIgnoreCase("nacho@nubicall.com");
-    if (!userResult.isPresent() && !userResult.equals(Optional.empty())) {
+    User user= this.userRepository.findUserByEmail("nacho@nubicall.com");
+    //if (!userResult.isPresent() && !userResult.equals(Optional.empty())) {
+    if (user != null) {
       logger.debug(
           "####### DummyDataController.generateAll() is unable to generate new testdata: Already existing testdata");
 

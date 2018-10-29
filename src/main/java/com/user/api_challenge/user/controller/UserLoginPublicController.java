@@ -47,14 +47,13 @@ public class UserLoginPublicController {
     String email = login.getEmail();
     String password = login.getPassword();
 
-    Optional<User> userResult = userRepository.findByEmailIgnoreCase(email);
+    User user = userRepository.findUserByEmail(email);
 
-    // Check if email is correct
-    if (!userResult.isPresent() && userResult.equals(Optional.empty())) {
+    // Check if email exists
+    if (user == null) {
       logger.warn("User login attempt " + email + " failed! User not found!");
       return getUnauthorizedsResponse();
     }
-    User user = userResult.get();
 
     if (!user.getUserStatus().equals(UserStatus.Active.name())) {
       logger.warn(
