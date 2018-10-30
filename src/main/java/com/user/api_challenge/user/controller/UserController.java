@@ -79,7 +79,7 @@ public class UserController {
       return new ResponseEntity<>(HttpStatus.CREATED);
 
     } catch (UserExistsException e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(  new GenericApiResponse(HttpStatus.BAD_REQUEST, e.getMessage()),HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -92,12 +92,12 @@ public class UserController {
 
     User userByEmail = userRepository.findUserByEmail(userRequest.getEmail());
     User userByUsername = userRepository.findUserByUserName(userRequest.getUsername());
-    if (userByEmail == null) {
+    if (userByEmail != null) {
       logger.warn("User with email: " + userRequest.getEmail() + " already exists.");
       throw new UserExistsException(UserExistsException.Conflict.EMAIL_EXISTS);
     }
 
-    if (userByUsername == null) {
+    if (userByUsername != null) {
       logger.warn("User with username: " + userRequest.getUsername() + " already exists.");
       throw new UserExistsException(UserExistsException.Conflict.USERNAME_EXISTS);
     }
@@ -111,9 +111,7 @@ public class UserController {
             userRequest.getLastName(),
             userRequest.getPhone());
 
-    if (newUser.getUserStatus() == null
-        || !newUser.getUserStatus().equals(UserStatus.Active.name())
-        || !newUser.getUserStatus().equals(UserStatus.Blocked.name())) {
+    if (newUser.getUserStatus() == null && (!newUser.getUserStatus().equals(UserStatus.Active.name()) || !newUser.getUserStatus().equals(UserStatus.Blocked.name()))) {
       // Default user status
       newUser.setUserStatus(UserStatus.Active.name());
     }
