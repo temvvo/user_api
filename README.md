@@ -71,7 +71,8 @@ $ ./gradlew bootRun
 3. Use the token provided by login endpoint as Authorization, Type: Bearer token {{token}}   
 4. Call any endpoint declared in user-api.yaml with this Autorization token. 
 
-##Code Coverage Report:
+## Code Coverage Report:
 /api_challenge/src/test/java/com/user/api_challenge/code/coverage/com.user.api_challenge.user.controller/.classes/UserController.html
+
 ## Responsible developer:
 * Carlos Pereyra <temvvo@gmail.com>
