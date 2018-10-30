@@ -7,7 +7,7 @@ User api and tests
 ## Prerequisites
 1. Install Java [http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html#javasejdk]
 2. Install Gradle [https://gradle.org/install/]
-3. Install Postman[https://www.getpostman.com/]
+3. Install Postman [https://www.getpostman.com/]
 
 
 ## Local development
@@ -33,9 +33,11 @@ $ cd api_challenge
 $ ./gradlew bootRun
 ```
  {{base_url}} = http://localhost:8080
-1- Fill database with dummydata using this POST endpoint:
+
+1. Fill database with dummydata using this POST endpoint:
     {{base_url}}/public/testdata/user
-2- Login with following POST endpoint:   
+
+2. Login with following POST endpoint:   
     {{base_url}}/public/user/login
     
     Body:
@@ -66,8 +68,9 @@ $ ./gradlew bootRun
         console.log("Current User id is: " + pm.environment.get("currentUserId"));
     
     }
-3- Use the token provided by login endpoint as Authorization, Type: Bearer token {{token}}   
-4 - Call any endpoint declared in user-api.yaml with this Autorization token. 
-
-## Responsible developers:
+3. Use the token provided by login endpoint as Authorization, Type: Bearer token {{token}}   
+4. Call any endpoint declared in user-api.yaml with this Autorization token. 
+##Code Coverage Report:
+/api_challenge/src/test/java/com/user/api_challenge/code/coverage/com.user.api_challenge.user.controller/.classes/UserController.html
+## Responsible developer:
 * Carlos Pereyra <temvvo@gmail.com>
