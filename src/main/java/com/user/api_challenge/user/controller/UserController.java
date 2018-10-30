@@ -28,7 +28,6 @@ import java.security.Principal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -66,14 +65,11 @@ public class UserController {
           new GenericApiResponse(HttpStatus.BAD_REQUEST, msg), HttpStatus.BAD_REQUEST);
     }
     // Verify if user from token exists in the DB
-   // Optional<User> userResult = userRepository.findById(Long.parseLong(principal.getName()));
     User user = userRepository.findUserById(Long.parseLong(principal.getName()));
-    //if (!userResult.isPresent()) {
-    if (user== null) {
+    if (user == null) {
       logger.warn("Unable to find user: " + principal.getName());
       return new ResponseEntity<>(
-          new GenericApiResponse(
-              HttpStatus.BAD_REQUEST, "Internal error while creating User"),
+          new GenericApiResponse(HttpStatus.BAD_REQUEST, "Internal error while creating User"),
           HttpStatus.BAD_REQUEST);
     }
 
@@ -92,6 +88,8 @@ public class UserController {
       throws UserExistsException, UnprocessableEntityException {
 
     logger.info("Creating new user: " + userRequest.getEmail());
+
+
     User userByEmail = userRepository.findUserByEmail(userRequest.getEmail());
     User userByUsername = userRepository.findUserByUserName(userRequest.getUsername());
     if (userByEmail == null) {
@@ -141,9 +139,12 @@ public class UserController {
       @PathVariable String username, JwtAuthentication authentication) {
 
     logger.info("GET /users/" + username + " called");
+
+    //TODO: Verify if user from token exists in the DB
+
     User user = this.userRepository.findUserByUserName(username);
 
-    // Errorhandling if object does not exists
+    // Errorhandling if username does not exists
     if (user == null) {
       return new ResponseEntity<>(
           new UuidGenericResponse(
@@ -164,6 +165,9 @@ public class UserController {
       @RequestBody User userUpdated,
       JwtAuthentication authentication) {
 
+
+    //TODO: Verify if user from token exists in the DB
+
     // check if user exists
     User userToChange = userRepository.findUserByUserName(username);
     if (userToChange == null) {
@@ -181,7 +185,7 @@ public class UserController {
     userToChange.setLastName(userUpdated.getLastName());
     userToChange.setPhone(userUpdated.getPhone());
     userToChange.setUserStatus(userUpdated.getUserStatus());
-
+    this.userRepository.save(userToChange);
     return new ResponseEntity<>(new UserResponse(userToChange), HttpStatus.OK);
   }
 
@@ -192,8 +196,9 @@ public class UserController {
       @PathVariable String username, JwtAuthentication authentication) throws Exception {
 
     logger.info("DELETE /users/" + username + " called");
+    //TODO: Verify if user from token exists in the DB
 
-    // check if user exists
+    // check if user exists in DB
     User userToDelete = userRepository.findUserByUserName(username);
     if (userToDelete == null) {
       return new ResponseEntity<>(
