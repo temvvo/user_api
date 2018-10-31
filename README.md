@@ -42,14 +42,14 @@ $ ./gradlew bootRun
     Body:
     {
       "email": "nacho@nubicall.com",
-      "password": "{{petowner1pwHashed}}"
+      "password": "{{user1pwHashed}}"
     }
     
     Pre request script:
     var pw = "Test1234";
     var hashedPw = String(CryptoJS.SHA256(pw));
-    pm.environment.set("petowner1pwHashed", hashedPw);
-    console.log("PW: "+pw+" petowner1pwHashed: "+pm.environment.get("petowner1pwHashed"));
+    pm.environment.set("user1pwHashed", hashedPw);
+    console.log("PW: "+pw+" user1pwHashed: "+pm.environment.get("user1pwHashed"));
     
     Tests:
     var jsonData = JSON.parse(responseBody);
